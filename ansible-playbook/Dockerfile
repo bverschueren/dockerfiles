@@ -1,0 +1,10 @@
+FROM alpine:latest
+RUN apk update \
+    && apk --update add python py-pip openssl ca-certificates  \
+    && apk --update add --virtual build-dependencies python-dev openssl-dev libffi-dev build-base gcc  \
+    && pip install ansible \
+    && apk del build-dependencies \
+    && adduser -u 1000 ansible ansible -D 
+USER ansible
+WORKDIR /home/ansible
+ENTRYPOINT ["ansible-playbook"]

@@ -1,0 +1,14 @@
+notifications:
+    email: true
+
+env:
+    - UTIL=ansible-playbook VERSION=$(curl -s https://pypi.python.org/pypi/ansible/json|jq '.info.version')
+
+before_install:
+    - sudo apt-get install -y jq
+
+install:
+    - cd ${UTIL} && docker build -t ${UTIL}:${TRAVIS_COMMIT} -f Dockerfile .
+
+script:
+    - docker run ${UTIL}:${TRAVIS_COMMIT} --version |grep ${VERSION}
