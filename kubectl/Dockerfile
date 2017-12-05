@@ -4,4 +4,5 @@ RUN apk --update add curl ca-certificates \
     && chmod +x /usr/local/bin/kubectl \
     && adduser kubectl kubectl -D
 USER kubectl
+WORKDIR /home/kubectl/
 ENTRYPOINT ["kubectl"]
