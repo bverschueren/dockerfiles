@@ -2,17 +2,14 @@ notifications:
     email: true
 
 env:
-    - UTIL=ansible-playbook VERSION=$(curl -s https://pypi.python.org/pypi/ansible/json|jq --raw-output ".info.version") VERSION_CHECK="--version"
-    - UTIL=kubectl          VERSION=$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)      VERSION_CHECK="version --client"
-
-before_install:
-    - sudo apt-get install -y jq
+    - UTIL=ansible-playbook VERSION_CHECK="--version"
+    - UTIL=kubectl          VERSION_CHECK="version --client"
 
 install:
     - cd ${UTIL} && docker build -t ${UTIL}:${TRAVIS_COMMIT} -f Dockerfile .
 
 script:
-    - docker run ${UTIL}:${TRAVIS_COMMIT} ${VERSION_CHECK} |grep ${VERSION}
+    - docker run ${UTIL}:${TRAVIS_COMMIT} ${VERSION_CHECK}
 
 after_success:
     - if [ "$TRAVIS_BRANCH" == "master" ]; then
