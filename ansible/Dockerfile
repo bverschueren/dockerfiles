@@ -7,4 +7,4 @@ RUN apk update \
     && adduser ansible ansible -D 
 USER ansible
 WORKDIR /home/ansible
-ENTRYPOINT ["ansible-playbook"]
+ENTRYPOINT ["ansible"]

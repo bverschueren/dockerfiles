@@ -2,7 +2,7 @@ notifications:
     email: true
 
 env:
-    - UTIL=ansible-playbook VERSION_CHECK="--version"
+    - UTIL=ansible          VERSION_CHECK="--version"
     - UTIL=kubectl          VERSION_CHECK="version --client"
 
 install:
